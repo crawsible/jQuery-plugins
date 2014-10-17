@@ -1,1 +1,12 @@
 @import url('http://yui.yahooapis.com/3.5.0/build/cssreset/cssreset-min.css');
+
+.carousel {
+  width: 400px;
+  height: 400px;
+  margin: 20px auto;
+}
+
+.items {
+  width: 100%;
+  height: 100%;
+}
