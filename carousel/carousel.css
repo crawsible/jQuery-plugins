@@ -10,3 +10,15 @@
   width: 100%;
   height: 100%;
 }
+
+.items * {
+  display: none;
+}
+
+.items .active {
+  display: block;
+}
+
+.slide {
+  text-align: center;
+}
