@@ -28,6 +28,11 @@ $.Carousel.prototype.imgCount = function () {
 };
 
 $.Carousel.prototype.slide = function (dir) {
+  if (this.transitioning) {
+    return false;
+  }
+  this.transitioning = true;
+
   this.animateSlideOutWithDir(dir);
   this.activeIdx += dir;
   this.activeIdx = (this.activeIdx + this.imgCount()) % this.imgCount();
@@ -40,7 +45,7 @@ $.Carousel.prototype.animateSlideInWithDir = function (dir) {
   $img.addClass("active " + dirClass);
   setTimeout(function () {
     $img.removeClass(dirClass);
-  }, 0);
+  }, 20);
 };
 
 $.Carousel.prototype.animateSlideOutWithDir = function (dir) {
@@ -49,7 +54,8 @@ $.Carousel.prototype.animateSlideOutWithDir = function (dir) {
   $img.addClass(dirClass);
   $img.one("transitionend", function () {
     $img.removeClass("active " + dirClass);
-  });
+    this.transitioning = false;
+  }.bind(this));
 };
 
 $.fn.carousel = function () {
