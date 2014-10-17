@@ -12,6 +12,13 @@ div.tab-pane {
   display: none;
 }
 
+div.transitioning {
+  display: block;
+  opacity: 0;
+  transition: opacity 0.5s linear;
+}
+
 div.tab-pane.active {
   display: block;
+  transition: opacity 0.5s linear
 }

@@ -13,8 +13,21 @@ $.Tabs.prototype.clickTab = function (event) {
   $activatedA.closest("ul").find(".active").removeClass("active");
   $activatedA.addClass("active");
 
-  this.$activeTab.removeClass("active");
-  this.$activeTab = $($activatedA.attr("href")).addClass("active");
+  this.animateContentTabSwitch($activatedA);
+};
+
+$.Tabs.prototype.animateContentTabSwitch = function ($activatedA) {
+  this.$activeTab.removeClass("active").addClass("transitioning");
+  this.$activeTab.one("transitionend", function () {
+    this.$activeTab.removeClass("transitioning");
+
+    // new $activeTab!!!
+    this.$activeTab = $($activatedA.attr("href"));
+    this.$activeTab.addClass("active transitioning");
+    setTimeout(function () {
+      this.$activeTab.removeClass("transitioning");
+    }.bind(this), 0);
+  }.bind(this));
 };
 
 $.fn.tabs = function (el) {
