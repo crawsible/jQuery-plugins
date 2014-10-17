@@ -28,10 +28,28 @@ $.Carousel.prototype.imgCount = function () {
 };
 
 $.Carousel.prototype.slide = function (dir) {
-  this.imgAtActiveIdx().removeClass("active");
+  this.animateSlideOutWithDir(dir);
   this.activeIdx += dir;
   this.activeIdx = (this.activeIdx + this.imgCount()) % this.imgCount();
-  this.imgAtActiveIdx().addClass("active");
+  this.animateSlideInWithDir(dir);
+};
+
+$.Carousel.prototype.animateSlideInWithDir = function (dir) {
+  var dirClass = (dir < 0 ? "left" : "right");
+  var $img = this.imgAtActiveIdx()
+  $img.addClass("active " + dirClass);
+  setTimeout(function () {
+    $img.removeClass(dirClass);
+  }, 0);
+};
+
+$.Carousel.prototype.animateSlideOutWithDir = function (dir) {
+  var dirClass = (dir < 0 ? "right" : "left");
+  var $img = this.imgAtActiveIdx();
+  $img.addClass(dirClass);
+  $img.one("transitionend", function () {
+    $img.removeClass("active " + dirClass);
+  });
 };
 
 $.fn.carousel = function () {
